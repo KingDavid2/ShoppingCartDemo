@@ -22,4 +22,23 @@ describe ShoppingCart do
       expect(cart.total_price).to eq(199.95)
     end
   end
+
+  describe 'Add additional products of the same type to the shopping cart' do
+    before do
+      5.times { cart.add_products(product) }
+      3.times { cart.add_products(product) }
+    end
+
+    it 'The shopping cart should contain 8 Dove Soaps each with a unit price of 39.99' do
+      product_names = cart.products.select { |product|  product.name == 'Dove Soap' }
+      product_prices = cart.products.select { |product|  product.price == 39.99 }
+
+      expect(product_names.count).to eq(8)
+      expect(product_prices.count).to eq(8)
+    end
+
+    it 'The shopping cart\'s total price should equal 319.92' do
+      expect(cart.total_price).to eq(319.92)
+    end
+  end
 end
